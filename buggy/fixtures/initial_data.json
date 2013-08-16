@@ -1,0 +1,50 @@
+[
+{
+  "pk": 1, 
+  "model": "buggy.status", 
+  "fields": {
+    "type": "start", 
+    "name": "Opened"
+  }
+},
+{
+  "pk": 2, 
+  "model": "buggy.status", 
+  "fields": {
+    "type": "end", 
+    "name": "Fixed"
+  }
+},
+{
+  "pk": 3, 
+  "model": "buggy.status", 
+  "fields": {
+    "type": "intermediate", 
+    "name": "Can't reproduce"
+  }
+},
+{
+  "pk": 4, 
+  "model": "buggy.status", 
+  "fields": {
+    "type": "intermediate", 
+    "name": "Verfified"
+  }
+},
+{
+  "pk": 5, 
+  "model": "buggy.status", 
+  "fields": {
+    "type": "end", 
+    "name": "Won't fix"
+  }
+},
+{
+  "pk": 6, 
+  "model": "buggy.status", 
+  "fields": {
+    "type": "end", 
+    "name": "Invalid"
+  }
+}
+]

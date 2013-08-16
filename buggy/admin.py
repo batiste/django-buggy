@@ -1,5 +1,5 @@
 from django.contrib import admin
-from buggy.models import Project, Ticket, Comment
+from buggy.models import Project, Ticket, Comment, Status
 
 class ProjectAdmin(admin.ModelAdmin):
     pass
@@ -15,3 +15,9 @@ class TicketAdmin(admin.ModelAdmin):
     pass
 
 admin.site.register(Ticket, TicketAdmin)
+
+class StatusAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(Status, StatusAdmin)
+
