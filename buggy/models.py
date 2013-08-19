@@ -55,10 +55,12 @@ class Status(models.Model):
   
     name = models.CharField(max_length=30, verbose_name=_('Name'))
     type = models.CharField(max_length=20, verbose_name=_('Type'), choices=STATUS_TYPES)
+    order = models.PositiveIntegerField(default=5, help_text="Smaller first")
 
     class Meta:
         verbose_name = _('Status')
         verbose_name_plural = _('Statuses')
+        ordering = ['order']
 
     def __unicode__(self):
         return self.name
@@ -73,7 +75,7 @@ class Ticket(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
     assignee = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name="assignee")
 
-    status = models.ForeignKey(Status, default=Status.objects.get(name="Opened"))
+    status = models.ForeignKey(Status)
     priority = models.CharField(choices=PRIORITY_CHOICES, max_length=25, verbose_name=_('Priority'), default='medium')
 
     created_on = models.DateTimeField(verbose_name=_('Created on'), auto_now_add=True)
@@ -108,7 +110,7 @@ class Ticket(models.Model):
     class Meta:
         verbose_name = _('Ticket')
         verbose_name_plural = _('Tickets')
-        ordering = ['-status__type', '-priority']
+        ordering = ['status__order', '-priority']
 
 
 class Comment(models.Model):

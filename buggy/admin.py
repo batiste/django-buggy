@@ -17,7 +17,7 @@ class TicketAdmin(admin.ModelAdmin):
 admin.site.register(Ticket, TicketAdmin)
 
 class StatusAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'type', 'order')
 
 admin.site.register(Status, StatusAdmin)
 
