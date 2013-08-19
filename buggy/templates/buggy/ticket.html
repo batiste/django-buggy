@@ -1,0 +1,74 @@
+{% extends "buggy/base.html" %}
+
+{% block title %}{{ ticket.title }}{% endblock %}
+
+{% block breadcrumb %}
+  <i class="icon-angle-right"></i> <a href="{{ ticket.project.get_absolute_url }}"> {{ ticket.project.title|truncatechars:30 }}</a>
+  <i class="icon-angle-right"></i> Ticket {{ ticket.title }}
+{% endblock %}
+
+{% block content %}
+
+
+<h2>Ticket {{ ticket.title }}</h2>
+
+<div style="overflow:hidden;clear:both;margin-bottom:20px;">
+<table style="float:left; margin-right:30px;">
+<tr>
+  <th>
+    Status
+  </th>
+  <td>
+    {{ ticket.status }}
+  </td>
+</tr>
+<tr>
+  <th>
+    Priority
+  </th>
+  <td>
+    {{ ticket.priority }}
+  </td>
+</tr>
+<table style="float:left; margin-right:30px;">
+<tr>
+  <th>
+    Author
+  </th>
+  <td>
+    {{ ticket.author }}
+  </td>
+</tr>
+
+<tr>
+  <th>
+    Assignee
+  </th>
+  <td>
+    {{ ticket.assignee }}
+  </td>
+</tr>
+</table>
+<table style="float:left; margin-right:30px;">
+<tr>
+  <th>
+    Last updated
+  </th>
+  <td>
+    {{ ticket.updated_on|timesince }}
+  </td>
+</tr>
+<tr>
+  <th>
+    Created
+  </th>
+  <td>
+    {{ ticket.created_on|timesince }}
+  </td>
+</tr>
+</table>
+</div>
+
+<div>{{ ticket.description }}</div>
+
+{% endblock %}

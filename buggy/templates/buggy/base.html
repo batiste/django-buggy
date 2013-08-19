@@ -1,8 +1,20 @@
-<html>
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+<link href="{% static "css/main.css" %}" rel="stylesheet">
+<link href="{% static "font-awesome/css/font-awesome.css" %}" rel="stylesheet">
+
 <head>
-<title>{% block title %}{% endblock %}</title>
+<title>{% block title %}{% endblock %} - Buggy, lightweight bug tracker</title>
 </head>
 <body>
+<header>
+<img src="{% static "css/logo-s.png" %}" id="logo" /> <a href="{% url "buggy.projects" %}">Buggy</a> {% block breadcrumb %}{% endblock %}
+</header>
+<div id="content">
 {% block content %}
 {% endblock %}
-
+</div>
+</body>
+</html>

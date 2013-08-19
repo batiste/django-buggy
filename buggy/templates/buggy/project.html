@@ -1,0 +1,57 @@
+{% extends "buggy/base.html" %}
+
+{% block title %}Project {{ project.title }}{% endblock %}
+
+{% block breadcrumb %}
+  <i class="icon-angle-right"></i> Project {{ project.title }}
+{% endblock %}
+
+{% block content %}
+<h2>List of tickets for project {{ project.title }}</h2>
+
+<table>
+<thead>
+<tr>
+<th>Title</th>
+<th>Status</th>
+<th>Priority</th>
+<th>Author</th>
+<th>Assignee</th>
+<th>Last updated</th>
+<th>Created</th>
+</tr>
+</thead>
+{% for ticket in tickets %}
+<tr>
+  <td>
+  <a href="{{ ticket.get_absolute_url }}">
+    {{ ticket.title|truncatechars:40 }}
+  </a>
+  </td>
+  <td>
+    <i class="{{ ticket.get_icon }}"></i> {{ ticket.status }}
+  </td>
+  <td style="background-color:{{ ticket.get_color }}">
+    {{ ticket.priority }} 
+  </td>
+  <td>
+    {{ ticket.author }}
+  </td>
+  <td>
+    {{ ticket.assignee }}
+  </td>
+
+  <td>
+    {{ ticket.updated_on|timesince }}
+  </td>
+
+
+  <td>
+    {{ ticket.created_on|timesince }}
+  </td>
+
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}

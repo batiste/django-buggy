@@ -1,0 +1,26 @@
+
+body {
+
+}
+
+header {
+  font-size:16px;
+  background:#eee;
+  padding:10px 12px;
+}
+
+#logo {
+  margin-right:20px;
+}
+
+#content {
+  padding-left:114px;
+  max-width:1200px;
+}
+
+table td, table th {
+  padding:3px 16px 3px 0px;
+  border-bottom:1px #ddd solid;
+}
+
+

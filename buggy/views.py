@@ -9,12 +9,12 @@ def projects(request):
 
 def project(request, project_id):
     project = Project.objects.get(id=project_id)
-    tickets = Ticket.object.filter(project=project)
+    tickets = Ticket.objects.filter(project=project)
     return render_to_response('buggy/project.html', 
         {'project': project, 'tickets':tickets})
 
 def ticket(request, ticket_id):
-    ticket = Ticket.object.get(id=ticket_id)
+    ticket = Ticket.objects.get(id=ticket_id)
     project = ticket.project
     return render_to_response('buggy/ticket.html', 
         {'project': project, 'ticket':ticket})

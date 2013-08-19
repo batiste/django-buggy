@@ -53,7 +53,7 @@ class Project(models.Model):
 
 class Status(models.Model):
   
-    name = models.CharField(max_length=255, verbose_name=_('Name'))
+    name = models.CharField(max_length=30, verbose_name=_('Name'))
     type = models.CharField(max_length=20, verbose_name=_('Type'), choices=STATUS_TYPES)
 
     class Meta:
@@ -67,7 +67,7 @@ class Ticket(models.Model):
 
     project = models.ForeignKey(Project)
     
-    title = models.CharField(max_length=25, verbose_name=_('Title'))
+    title = models.CharField(max_length=255, verbose_name=_('Title'))
     description = models.TextField(verbose_name=_('Description'))
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
@@ -89,10 +89,26 @@ class Ticket(models.Model):
     def get_absolute_url(self):
         return reverse('buggy.ticket', args=[str(self.id)])
     
+    def get_icon(self):
+        if self.status.type == "intermediate":
+            return "icon-cogs"
+        if self.status.type == "end":
+            return "icon-check"
+        return "icon-bug"
+
+    def get_color(self):
+        i = 0
+        for key, value in PRIORITY_CHOICES:
+            if key == self.priority:
+                break
+            i = i + 1
+        amount_of_red = i * (255 / len(PRIORITY_CHOICES))
+        return '#%02X%02X%02X' % (255, 255-amount_of_red, 255-amount_of_red)
+
     class Meta:
         verbose_name = _('Ticket')
         verbose_name_plural = _('Tickets')
-        ordering = ['-status', '-priority']
+        ordering = ['-status__type', '-priority']
 
 
 class Comment(models.Model):

@@ -2,15 +2,21 @@
 
 {% block title %}Projects{% endblock %}
 
+
 {% block content %}
-<h1>Projects</h1>
+
+<h2>List of projects</h2>
 
 {% for project in projects %}
-<h2>
+<h3>
   <a href="{{ project.get_absolute_url }}">
     {{ project.title }}
   </a>
-</h2>
+</h3>
 {% endfor %}
+
+<h2>Add a project</h2>
+
+<p>To be done</p>
 
 {% endblock %}
