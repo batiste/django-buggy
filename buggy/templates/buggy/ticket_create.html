@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-<h2>New ticket for project {{ project.title }}</h2>
+<h2>New ticket for {{ project.title }}</h2>
 
 <form method="post" action="">
 {% csrf_token %}

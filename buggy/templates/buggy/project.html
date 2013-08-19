@@ -9,11 +9,12 @@
 {% endblock %}
 
 {% block content %}
-<h2>List of tickets for project {{ project.title }} 
 
-</h2>
+<h2>List of tickets for {{ project.title }}</h2>
 
-<table>
+
+
+<table class="table-striped">
 <thead>
 <tr>
 <th>Title</th>
@@ -30,13 +31,13 @@
 <tr>
   <td>
   <a href="{{ ticket.get_absolute_url }}">
-    {{ ticket.title|truncatechars:40 }}
+    {{ ticket.title|truncatechars:45 }}
   </a>
   </td>
   <td>
     <i class="{{ ticket.get_icon }}"></i> {{ ticket.status }}
   </td>
-  <td style="background-color:{{ ticket.get_color }}">
+  <td style="{{ ticket.get_style }}">
     {{ ticket.priority }} 
   </td>
   <td>
@@ -62,6 +63,22 @@
 
 </tr>
 {% endfor %}
+
+<tr><td colspan="8">
+
+<form action="" method="post">
+{% csrf_token %}
+
+<label><input name="only_assign_to_me" {% if options.only_assigned %}checked{% endif %} type="checkbox"> Only tickets assigned to me</label>
+<label><input name="show_resolved" {% if options.show_all %}checked{% endif %} type="checkbox"> Show resolved tickets</label>
+<input type="submit" class="btn btn-primary btn-sm" value="Save">
+
+</form>
+
+</td></tr>
+
 </table>
+
+
 
 {% endblock %}

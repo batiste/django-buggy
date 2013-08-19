@@ -3,7 +3,7 @@ from taggit.managers import TaggableManager
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.core.urlresolvers import reverse
-
+from django.db.models import Q
 
 STATUS_CHOICES = (
   # start
@@ -51,6 +51,12 @@ class Project(models.Model):
     def __unicode__(self):
         return self.title
 
+    def opened_tickets(self):
+        return self.ticket_set.filter(Q(status__type="start") | Q(status__type="intermediate"))
+
+    def resolved_tickets(self):
+        return self.ticket_set.filter(status__type="end")
+
 class Status(models.Model):
   
     name = models.CharField(max_length=30, verbose_name=_('Name'))
@@ -90,6 +96,9 @@ class Ticket(models.Model):
 
     def get_absolute_url(self):
         return reverse('buggy.ticket', args=[str(self.id)])
+
+    def is_closed(self):
+        return self.status.type == "end"
     
     def get_icon(self):
         if self.status.type == "intermediate":
@@ -98,14 +107,16 @@ class Ticket(models.Model):
             return "icon-check"
         return "icon-bug"
 
-    def get_color(self):
+    def get_style(self):
+        if self.is_closed():
+            return "background-color:#398439;color:#fff;"
         i = 0
         for key, value in PRIORITY_CHOICES:
             if key == self.priority:
                 break
             i = i + 1
         amount_of_red = i * (255 / len(PRIORITY_CHOICES))
-        return '#%02X%02X%02X' % (255, 255-amount_of_red, 255-amount_of_red)
+        return 'background-color:#%02X%02X%02X;' % (255, 255-amount_of_red, 255-amount_of_red)
 
     class Meta:
         verbose_name = _('Ticket')

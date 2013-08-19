@@ -2,18 +2,29 @@
 
 {% block title %}Projects{% endblock %}
 
+{% block breadcrumb %}
+    |  Buggy is a lightweight bug tracker
+    <a href="{% url "admin:buggy_project_add" %}" class="btn btn-primary"><i class="icon-plus-sign-alt"></i> New project</a>
+{% endblock %}
 
 {% block content %}
 
 <h2>List of projects</h2>
 
+<table class="table-striped">
 {% for project in projects %}
-<h3>
-  <a href="{{ project.get_absolute_url }}">
-    {{ project.title }}
-  </a>
-</h3>
+<tr>
+  <td><a href="{{ project.get_absolute_url }}">{{ project.title }}</td>
+
+  <td>{{ project.opened_tickets.count }} opened tickets</td>
+  <td><a href="{% url "buggy.ticket-create" project.id %}" class="btn btn-primary btn-sm">
+     <i class="icon-plus-sign-alt"></i> New ticket</a>
+  </a></td>
+</tr>
 {% endfor %}
+</table>
+
+
 
 
 {% endblock %}

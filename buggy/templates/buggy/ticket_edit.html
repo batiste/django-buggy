@@ -5,11 +5,11 @@
 {% block breadcrumb %}
   <i class="icon-angle-right"></i> <a href="{{ project.get_absolute_url }}"> {{ project.title|truncatechars:30 }}</a>
   <i class="icon-angle-right"></i> <a href="{{ ticket.get_absolute_url }}">Ticket {{ ticket.title }}</a>
-  <i class="icon-angle-right"> Edit
+  <i class="icon-angle-right"></i> Edit
 {% endblock %}
 
 {% block content %}
-<h2>Edit ticket {{ ticket.title }}</h2>
+<h2><i class="{{ ticket.get_icon }}"></i> Edit {{ ticket.title }}</h2>
 
 <form method="post" action="">
 {% csrf_token %}

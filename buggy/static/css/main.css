@@ -23,6 +23,10 @@ table td, table th {
   border-bottom:1px #ddd solid;
 }
 
+form table td, form table th {
+  padding:6px 12px 6px 12px;
+}
+
 table td:first-child, table th:first-child {
   padding-left:0;
 }

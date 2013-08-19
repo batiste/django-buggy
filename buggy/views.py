@@ -12,10 +12,34 @@ def projects(request):
     return render_to_response('buggy/projects.html', {'projects': projects})
 
 def project(request, project_id):
+
     project = Project.objects.get(id=project_id)
-    tickets = Ticket.objects.filter(project=project)
-    return render_to_response('buggy/project.html', 
-        {'project': project, 'tickets':tickets})
+    options = {'show_all':False, 'only_assigned':False}
+    key = 'buggy_project_'+str(project.id)
+
+    if request.method == "POST":
+        options['only_assigned'] = True if request.POST.get("only_assign_to_me", False) else False
+        options['show_all'] = True if request.POST.get("show_resolved", False) else False
+        request.session[key] = options
+
+    if request.session.has_key(key):
+        options = request.session[key]
+
+    if options['show_all']:
+        tickets = Ticket.objects.filter(project=project)
+    else:
+        tickets = project.opened_tickets()
+
+    if options['only_assigned']:
+        tickets = tickets.filter(assignee=request.user)
+
+    context = RequestContext(request, {
+        'project': project,
+        'tickets':tickets, 
+        'options':options
+    })
+
+    return render_to_response('buggy/project.html', context)
 
 def ticket(request, ticket_id):
     ticket = Ticket.objects.get(id=ticket_id)

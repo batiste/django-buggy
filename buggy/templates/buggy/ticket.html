@@ -15,7 +15,7 @@
 
 <h2>
 
-<i class="{{ ticket.get_icon }}"></i> Ticket {{ ticket.title }}
+<i class="{{ ticket.get_icon }}"></i> {{ ticket.title }}
 
 </h2>
 
@@ -34,7 +34,7 @@
   <th>
     Priority
   </th>
-  <td style="background-color:{{ ticket.get_color }}">
+  <td style="{{ ticket.get_style }}">
     {{ ticket.priority }}
   </td>
 </tr>
@@ -87,7 +87,8 @@
 {% for comment in comments %}
 
 <div class="comment well">
-<h4>Comment by {{ comment.author }} posted {{ comment.created_on|timesince }}{% if comment.status_changed %}.
+<h4>Posted by {{ comment.author }} {{ comment.created_on|timesince }} ago.
+{% if comment.status_changed %}
     {{ comment.status_changed }}
 {% endif %}
 </h4>
