@@ -3,11 +3,15 @@
 {% block title %}Project {{ project.title }}{% endblock %}
 
 {% block breadcrumb %}
-  <i class="icon-angle-right"></i> Project {{ project.title }}
+  <i class="icon-angle-right"></i> {{ project.title }} <i class="icon-angle-right"></i>
+<a href="{% url "buggy.ticket-create" project.id %}" class="btn btn-primary">
+<i class="icon-plus-sign-alt"></i> New ticket</a>
 {% endblock %}
 
 {% block content %}
-<h2>List of tickets for project {{ project.title }}</h2>
+<h2>List of tickets for project {{ project.title }} 
+
+</h2>
 
 <table>
 <thead>
@@ -19,6 +23,7 @@
 <th>Assignee</th>
 <th>Last updated</th>
 <th>Created</th>
+<th>Actions</th>
 </tr>
 </thead>
 {% for ticket in tickets %}
@@ -48,6 +53,11 @@
 
   <td>
     {{ ticket.created_on|timesince }}
+  </td>
+
+  <td>
+<a href="{% url "buggy.ticket-edit" ticket.id %}" class="btn btn-primary btn-xs">
+<i class="icon-edit"></i> Edit ticket</a>
   </td>
 
 </tr>

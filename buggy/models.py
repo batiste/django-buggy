@@ -120,8 +120,10 @@ class Comment(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     # to register a change in the status of the ticket
-    status_before = models.ForeignKey(Status, verbose_name=_('Old status'), blank=True, null=True, related_name="status_before")
-    status_after = models.ForeignKey(Status, verbose_name=_('New status'), blank=True, null=True)
+    status_before = models.ForeignKey(Status, verbose_name=_('Old status'), 
+        blank=True, null=True, related_name="status_before")
+    status_after = models.ForeignKey(Status, verbose_name=_('New status'), 
+        blank=True, null=True)
 
     created_on = models.DateTimeField(verbose_name=_('Created on'), auto_now_add=True)
     updated_on = models.DateTimeField(verbose_name=_('Updated on'), auto_now=True)
@@ -129,8 +131,14 @@ class Comment(models.Model):
     def __unicode__(self):
         return self.description[0:30]
 
+    def status_changed(self):
+        stb = self.status_before
+        sta = self.status_after
+        if stb and sta and stb != sta:
+            return 'The status has been changed from "%s" to "%s"' % (stb, sta)
+
     class Meta:
         verbose_name = _('Comment')
         verbose_name_plural = _('Comments')
-        ordering = ['-created_on']
+        ordering = ['created_on']
 

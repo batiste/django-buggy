@@ -1,0 +1,27 @@
+{% extends "buggy/base.html" %}
+
+{% block title %}Project {{ project.title }}{% endblock %}
+
+{% block breadcrumb %}
+  <i class="icon-angle-right"></i> <a href="{{ project.get_absolute_url }}"> {{ project.title|truncatechars:30 }}</a>
+  <i class="icon-angle-right"></i> New ticket
+{% endblock %}
+
+{% block content %}
+<h2>New ticket for project {{ project.title }}</h2>
+
+<form method="post" action="">
+{% csrf_token %}
+<table>
+{{ form.as_table }}
+</table>
+<tr>
+<td></td>
+<td>
+<input type="submit" value="Create" class="btn btn-primary">
+</td>
+</tr>
+
+</form>
+
+{% endblock %}

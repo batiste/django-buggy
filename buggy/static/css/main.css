@@ -19,8 +19,46 @@ header {
 }
 
 table td, table th {
-  padding:3px 16px 3px 0px;
+  padding:3px 12px 3px 12px;
   border-bottom:1px #ddd solid;
 }
 
+table td:first-child, table th:first-child {
+  padding-left:0;
+}
 
+.errorlist {
+  color:#b94a48;
+}
+
+#id_description {
+  width:600px;
+}
+
+#id_title {
+  width:600px;
+  font-size:18px;
+}
+
+form .btn-primary {
+  float:right;
+}
+
+select, input, textarea {
+  padding:2px 2px;
+  line-height:1.4;
+}
+
+input, textarea {
+  border:2px #ddd solid;
+}
+
+.comment {
+  padding:12px;
+}
+
+.comment h4 {
+  margin-top:0;
+  font-size:15px;
+  font-weight:bold;
+}

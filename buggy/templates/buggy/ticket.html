@@ -4,13 +4,21 @@
 
 {% block breadcrumb %}
   <i class="icon-angle-right"></i> <a href="{{ ticket.project.get_absolute_url }}"> {{ ticket.project.title|truncatechars:30 }}</a>
-  <i class="icon-angle-right"></i> Ticket {{ ticket.title }}
+  <i class="icon-angle-right"></i> Ticket {{ ticket.title }} 
+  <i class="icon-angle-right"></i>
+<a href="{% url "buggy.ticket-edit" ticket.id %}" class="btn btn-primary">
+<i class="icon-edit"></i> Edit ticket</a> 
 {% endblock %}
 
 {% block content %}
 
 
-<h2>Ticket {{ ticket.title }}</h2>
+<h2>
+
+<i class="{{ ticket.get_icon }}"></i> Ticket {{ ticket.title }}
+
+</h2>
+
 
 <div style="overflow:hidden;clear:both;margin-bottom:20px;">
 <table style="float:left; margin-right:30px;">
@@ -26,7 +34,7 @@
   <th>
     Priority
   </th>
-  <td>
+  <td style="background-color:{{ ticket.get_color }}">
     {{ ticket.priority }}
   </td>
 </tr>
@@ -69,6 +77,39 @@
 </table>
 </div>
 
-<div>{{ ticket.description }}</div>
+<h3>Description</h3>
+
+<div>{{ ticket.description|urlize|linebreaks }}</div>
+
+{% if comments %}
+<h3>Comments</h3>
+
+{% for comment in comments %}
+
+<div class="comment well">
+<h4>Comment by {{ comment.author }} posted {{ comment.created_on|timesince }}{% if comment.status_changed %}.
+    {{ comment.status_changed }}
+{% endif %}
+</h4>
+{{ comment.description|urlize|linebreaks }}
+</div>
+{% endfor %}
+{% endif %}
+
+<h3>New Comment</h3>
+<form method="post" action="">
+{% csrf_token %}
+<table>
+{{ form.as_table }}
+
+<tr>
+<td></td>
+<td>
+<input type="submit" value="New comment" class="btn btn-primary">
+</td>
+</tr>
+
+</table>
+</form>
 
 {% endblock %}
