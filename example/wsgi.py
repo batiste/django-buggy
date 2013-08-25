@@ -14,6 +14,7 @@ framework.
 
 """
 import os
+import sys
 
 example_dir = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(example_dir, '..'))
