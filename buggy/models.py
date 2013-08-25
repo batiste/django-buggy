@@ -121,7 +121,7 @@ class Ticket(models.Model):
     class Meta:
         verbose_name = _('Ticket')
         verbose_name_plural = _('Tickets')
-        ordering = ['status__order', '-priority']
+        ordering = ['status__order', 'priority']
 
 
 class Comment(models.Model):

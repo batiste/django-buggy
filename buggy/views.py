@@ -31,7 +31,7 @@ def project(request, project_id):
         tickets = project.opened_tickets()
 
     if options['only_assigned']:
-        tickets = tickets.filter(assignee=request.user)
+        tickets = tickets.filter(assignee=request.user.id)
 
     context = RequestContext(request, {
         'project': project,
