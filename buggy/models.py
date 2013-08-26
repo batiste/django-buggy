@@ -23,6 +23,11 @@ class Project(models.Model):
     def resolved_tickets(self):
         return self.ticket_set.filter(status__type="end")
 
+STATUS_TYPES = (
+  ("start", _("Start")),
+  ("intermediate", _("Intermediate")),
+  ("end", _("Final")),
+)
 
 class Status(models.Model):
   
