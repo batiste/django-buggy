@@ -98,11 +98,12 @@ class Ticket(models.Model):
         if self.is_closed():
             return "background-color:#398439;color:#fff;"
         i = 0
-        for key, value in PRIORITY_CHOICES:
-            if key == self.priority:
+        priorities = Priority.objects.order_by('-order')
+        for priority in priorities:
+            if priority == self.priority:
                 break
             i = i + 1
-        amount_of_red = i * (255 / len(PRIORITY_CHOICES))
+        amount_of_red = i * (255 / len(priorities))
         return 'background-color:#%02X%02X%02X;' % (255, 255-amount_of_red, 255-amount_of_red)
 
     class Meta:
