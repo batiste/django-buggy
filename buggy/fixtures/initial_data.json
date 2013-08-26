@@ -1,15 +1,6 @@
 [
 {
   "pk": 1, 
-  "model": "buggy.project", 
-  "fields": {
-    "url": "", 
-    "workflow": "", 
-    "title": "Portimmo"
-  }
-},
-{
-  "pk": 1, 
   "model": "buggy.status", 
   "fields": {
     "type": "start", 
@@ -64,18 +55,50 @@
 },
 {
   "pk": 1, 
-  "model": "buggy.ticket", 
+  "model": "buggy.priority", 
   "fields": {
-    "status": 1, 
-    "priority": "high", 
-    "description": "If value is \"Joel is a slug\", the output will be \"Joel i...\".\r\n\r\ntruncatewords\r\nTruncates a string after a certain number of words.\r\n\r\nhttp://south.readthedocs.org/en/latest/tutorial/part1.html\r\n\r\nArgument: Number of words to truncate after\r\n\r\nFor example:", 
-    "author": 1, 
-    "title": "The help texts describing the features are inacurate an confusing.", 
-    "duplicate": null, 
-    "project": 1, 
-    "assignee": 1, 
-    "created_on": "2013-08-19T14:44:15.726Z", 
-    "updated_on": "2013-08-19T14:44:15.726Z"
+    "name": "Low", 
+    "order": 6
+  }
+},
+{
+  "pk": 2, 
+  "model": "buggy.priority", 
+  "fields": {
+    "name": "High", 
+    "order": 4
+  }
+},
+{
+  "pk": 3, 
+  "model": "buggy.priority", 
+  "fields": {
+    "name": "Very High", 
+    "order": 3
+  }
+},
+{
+  "pk": 4, 
+  "model": "buggy.priority", 
+  "fields": {
+    "name": "Urgent", 
+    "order": 2
+  }
+},
+{
+  "pk": 5, 
+  "model": "buggy.priority", 
+  "fields": {
+    "name": "Critical", 
+    "order": 1
+  }
+},
+{
+  "pk": 6, 
+  "model": "buggy.priority", 
+  "fields": {
+    "name": "Medium", 
+    "order": 5
   }
 }
 ]

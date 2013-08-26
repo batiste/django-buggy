@@ -1,5 +1,5 @@
 from django.contrib import admin
-from buggy.models import Project, Ticket, Comment, Status
+from buggy.models import Project, Ticket, Comment, Status, Priority
 
 class ProjectAdmin(admin.ModelAdmin):
     pass
@@ -21,3 +21,7 @@ class StatusAdmin(admin.ModelAdmin):
 
 admin.site.register(Status, StatusAdmin)
 
+class PriorityAdmin(admin.ModelAdmin):
+    list_display = ('name', 'order')
+
+admin.site.register(Priority, PriorityAdmin)

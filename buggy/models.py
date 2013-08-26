@@ -5,40 +5,6 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 
-STATUS_CHOICES = (
-  # start
-  ("opened", _("Opened")),
-
-  # intermediate
-  ("confirmed", _("Confirmed")),
-  ("waitreview", _("Waiting for code review")),
-  ("waitverification", _("Waiting for verification")),
-  (5, _("Verified in staging")),
-  (6, _("Verified in production")),
-  (8, _("Cannot reproduce")),
-
-  # final
-  (30, _("Fixed")),
-  (31, _("Closed")),
-  (32, _("Invalid")),
-  (33, _("Won't fix")),
-  (34, _("Duplicate")),
-)
-
-STATUS_TYPES = (
-  ("start", _("Start")),
-  ("intermediate", _("Intermediate")),
-  ("end", _("Final")),
-)
-
-PRIORITY_CHOICES = (
-    ('low', _('Low')),
-    ('medium', _('Medium')),
-    ('high', _('High')),
-    ('urgent', _('Urgent')),
-    ('critical', _('Critical')),
-)
-
 class Project(models.Model):
 
     title = models.CharField(max_length=255, verbose_name=_('Title'))
@@ -57,6 +23,7 @@ class Project(models.Model):
     def resolved_tickets(self):
         return self.ticket_set.filter(status__type="end")
 
+
 class Status(models.Model):
   
     name = models.CharField(max_length=30, verbose_name=_('Name'))
@@ -71,6 +38,21 @@ class Status(models.Model):
     def __unicode__(self):
         return self.name
 
+
+class Priority(models.Model):
+  
+    name = models.CharField(max_length=30, verbose_name=_('Name'))
+    order = models.PositiveIntegerField(default=5, help_text="Smaller first")
+
+    class Meta:
+        verbose_name = _('Priority')
+        verbose_name_plural = _('Priorities')
+        ordering = ['order']
+
+    def __unicode__(self):
+        return self.name
+
+
 class Ticket(models.Model):
 
     project = models.ForeignKey(Project)
@@ -82,7 +64,7 @@ class Ticket(models.Model):
     assignee = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name="assignee")
 
     status = models.ForeignKey(Status)
-    priority = models.CharField(choices=PRIORITY_CHOICES, max_length=25, verbose_name=_('Priority'), default='medium')
+    priority = models.ForeignKey(Priority)
 
     created_on = models.DateTimeField(verbose_name=_('Created on'), auto_now_add=True)
     updated_on = models.DateTimeField(verbose_name=_('Updated on'), auto_now=True)
@@ -121,7 +103,7 @@ class Ticket(models.Model):
     class Meta:
         verbose_name = _('Ticket')
         verbose_name_plural = _('Tickets')
-        ordering = ['status__order', 'priority']
+        ordering = ['status__order', 'priority__order']
 
 
 class Comment(models.Model):
