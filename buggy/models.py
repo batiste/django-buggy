@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db.models import Q
+from django.utils.text import Truncator
 
 class Project(models.Model):
 
@@ -79,7 +80,7 @@ class Ticket(models.Model):
     tags = TaggableManager(blank=True)
     
     def __unicode__(self):
-        return self.title
+        return Truncator(self.title).chars(30)
 
     def get_absolute_url(self):
         return reverse('buggy.ticket', args=[str(self.id)])
@@ -128,7 +129,7 @@ class Comment(models.Model):
     updated_on = models.DateTimeField(verbose_name=_('Updated on'), auto_now=True)
 
     def __unicode__(self):
-        return self.description[0:30]
+        return Truncator(self.description).chars(30)
 
     def status_changed(self):
         stb = self.status_before

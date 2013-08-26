@@ -3,21 +3,28 @@
 {% block title %}Project {{ project.title }}{% endblock %}
 
 {% block breadcrumb %}
-  <i class="icon-angle-right"></i> {{ project.title }} <i class="icon-angle-right"></i>
-<a href="{% url "buggy.ticket-create" project.id %}" class="btn btn-primary">
-<i class="icon-plus-sign-alt"></i> New ticket</a>
+<i class="icon-angle-right"></i>
+{% if tag_name %}
+  <a href="{% url "buggy.project" project.id %}">{{ project.title }}</a> <i class="icon-angle-right"></i>
+   Tag {{ tag_name }}
+{% else %}
+  {{ project.title }} <i class="icon-angle-right"></i>
+  <a href="{% url "buggy.ticket-create" project.id %}" class="btn btn-primary"><i class="icon-plus-sign-alt"></i> New ticket</a>
+{% endif %}
+
 {% endblock %}
 
 {% block content %}
 
-<h2>List of tickets for {{ project.title }}</h2>
+<h2>Tickets for {{ project.title }} 
 
 {% if tag_name %}
-<p>
-Filtered for tag name <strong>{{ tag_name }}</strong>
-<a href="{% url "buggy.project" project.id %}" class="btn btn-primary btn-sml">Remove filter</a>
-</p> 
+and tag "<strong>{{ tag_name }}</strong>"
+<a href="{% url "buggy.project" project.id %}" class="btn btn-primary btn-xs">Remove filter</a>
 {% endif %}
+
+</h2>
+
 
 <table class="table-striped">
 <thead>
