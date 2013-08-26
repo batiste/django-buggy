@@ -12,7 +12,12 @@
 
 <h2>List of tickets for {{ project.title }}</h2>
 
-
+{% if tag_name %}
+<p>
+Filtered for tag name <strong>{{ tag_name }}</strong>
+<a href="{% url "buggy.project" project.id %}" class="btn btn-primary btn-sml">Remove filter</a>
+</p> 
+{% endif %}
 
 <table class="table-striped">
 <thead>
@@ -24,6 +29,7 @@
 <th>Assignee</th>
 <th>Last updated</th>
 <th>Created</th>
+<th>Tags</th>
 <th>Actions</th>
 </tr>
 </thead>
@@ -57,6 +63,12 @@
   </td>
 
   <td>
+    {% for tag in ticket.tags.all %}
+      <a href="{% url "buggy.project-tag" project.id tag %}">{{ tag }}</a>
+    {% endfor %}
+  </td>
+
+  <td>
 <a href="{% url "buggy.ticket-edit" ticket.id %}" class="btn btn-primary btn-xs">
 <i class="icon-edit"></i> Edit</a>
   </td>
@@ -64,7 +76,8 @@
 </tr>
 {% endfor %}
 
-<tr><td colspan="8">
+{% if options %}
+<tr><td colspan="9">
 
 <form action="" method="post">
 {% csrf_token %}
@@ -76,6 +89,7 @@
 </form>
 
 </td></tr>
+{% endif %}
 
 </table>
 

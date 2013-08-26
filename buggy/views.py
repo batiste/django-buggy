@@ -43,6 +43,24 @@ def project(request, project_id):
 
     return render_to_response('buggy/project.html', context)
 
+
+@staff_member_required
+def project_by_tag(request, project_id, tag_name):
+
+    project = Project.objects.get(id=project_id)
+
+    tickets = Ticket.objects.filter(project=project)
+    tickets = tickets.filter(tags__name__in=[tag_name])
+
+    context = RequestContext(request, {
+        'project': project,
+        'tickets':tickets,
+        'tag_name':tag_name
+    })
+
+    return render_to_response('buggy/project.html', context)
+
+
 @staff_member_required
 def ticket(request, ticket_id):
     ticket = Ticket.objects.get(id=ticket_id)
