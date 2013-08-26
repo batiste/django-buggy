@@ -37,7 +37,8 @@ def project(request, project_id):
 
     context = RequestContext(request, {
         'project': project,
-        'tickets':tickets, 
+        # limit to 100
+        'tickets':tickets[:100], 
         'options':options
     })
 
